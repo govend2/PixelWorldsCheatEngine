@@ -215,6 +215,32 @@ ConfigData.IsBlockElastic:
 </AssemblerScript>
             </CheatEntry>
             <CheatEntry>
+              <ID>51</ID>
+              <Description>"Anti-Deflector"</Description>
+              <Color>00FF00</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+ConfigData.GetDeflectorForce:
+ret
+ConfigData.GetDeflectorMaxForce:
+ret
+ConfigData.GetDeflectorForceGrounded:
+ret
+ConfigData.GetDeflectorMaxForceGrounded:
+ret
+
+[DISABLE]
+ConfigData.GetDeflectorForce:
+nop 2
+ConfigData.GetDeflectorMaxForce:
+nop 2
+ConfigData.GetDeflectorForceGrounded:
+cmp edx,01
+ConfigData.GetDeflectorMaxForceGrounded:
+cmp edx,01
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
               <ID>21</ID>
               <Description>"Jump Mode [5]"</Description>
               <Options moHideChildren="1" moManualExpandCollapse="1"/>
@@ -360,6 +386,20 @@ Player.CheckInvertedControls:
 
 [DISABLE]
 Player.CheckInvertedControls:
+ db 48 89 5C 24 08
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>52</ID>
+              <Description>"Able to place block on player"</Description>
+              <Color>00FF00</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+Player.IsPlayerInMapPoint:
+ ret
+
+[DISABLE]
+Player.IsPlayerInMapPoint:
  db 48 89 5C 24 08
 </AssemblerScript>
             </CheatEntry>
@@ -510,16 +550,26 @@ WorldController.InstantiateFogOfWar:
 World.DoesPlayerHaveRightToModifyItemDataByMinorRightsLockWorld:
  mov eax,1
  ret
-
 //address:
 // db B8 01 00 00 00 C3
-
+World.DoesPlayerHaveRightToModifyItemData:
+ ret
+ConfigData.IsBlockBreakableByAnyone:
+ ret
+World.DoesPlayerHaveRightToModifyMapPoint:
+ret
 [DISABLE]
 World.DoesPlayerHaveRightToModifyItemDataByMinorRightsLockWorld:
  db 48 89 5C 24 08 48
-
 //address:
 // db 48 89 5C 24 08
+World.DoesPlayerHaveRightToModifyItemData:
+ db 4C 8B DC
+ConfigData.IsBlockBreakableByAnyone:
+ db 40 53
+World.DoesPlayerHaveRightToModifyMapPoint:
+ mov [rsp+20],r9l
+
 </AssemblerScript>
             </CheatEntry>
           </CheatEntries>
